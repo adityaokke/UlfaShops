@@ -1,0 +1,107 @@
+$.ajax({
+            dataType: 'json',
+            url: '<?php echo $this->Html->url(array('action'=>'getdata')); ?>/'+kodebarang+'/'+jumlah+'/'+unit
+        }).done(function(datas){ 
+            no++;
+            $(".input-kode-barang").focus();
+
+            $(".last-row-nota-jual").after(
+                '<tr>'+
+                '<td></td>'+                    
+                '<td><div class="input text"><label for="Transjual'+
+                no+
+                'Kode"></label><input class="input-transjual" name="data[Transjual]['+
+                no+
+                '][kode]" disabled="disabled" type="text" id="Transjual'+
+                no+
+                'Kode" value="'+
+                datas['Item']['kodebarang']+
+                '"></div></td>'+
+                '<td><div class="input text"><label for="Transjual'+
+                no+
+                'Nama"></label><input class="input-transjual" name="data[Transjual]['+
+                no+
+                '][nama]" disabled="disabled" type="text" id="Transjual'+
+                no+
+                'Nama" value="'+
+                datas['Item']['nama']+
+                '"></div></td>'+
+                '<td><div class="input text"><label for="Transjual'+
+                no+
+                'Quantity"></label><input class="input-transjual" name="data[Transjual]['+
+                no+
+                '][quantity]" disabled="disabled" type="text" id="Transjual'+
+                no+
+                'Quantity" value="'+
+                $(".input-jumlah-barang").val()+
+                '"></div></td>'+
+                '<td><div class="input select"><label for="Transjual'+
+                no+
+                'Unit"></label><select disabled="disabled" id="Transjual'+
+                no+
+                'Unit" class="input-transjual input-select" name="data[Transjual]['+
+                no+
+                '][unit]" >'+
+                    '<option value="0" harga="'+
+                    $(".input-unit-barang option[value='0']").attr("harga")+
+                    '" sat="1">satuan</option>'+
+                    '<option value="1" harga="'+
+                    $(".input-unit-barang option[value='1']").attr("harga")+
+                    '" sat="3">pack-3</option>'+
+                    '<option value="2" harga="'+
+                    $(".input-unit-barang option[value='2']").attr("harga")+
+                    '" sat="6">stgh-lusin</option>'+
+                    '<option value="3" harga="'+
+                    $(".input-unit-barang option[value='3']").attr("harga")+
+                    '" sat="12">lusin</option>'+
+                    '<option value="4" harga="'+
+                    $(".input-unit-barang option[value='4']").attr("harga")+
+                    '" sat="30">grosir</option>'+
+                    '</select></div></td>'+
+                '<td><div class="input text"><label for="Transjual'+
+                no+ 
+                'HargaJual"></label><input class="input-transjual"  name="data[Transjual]['+
+                no+
+                '][harga_jual]" disabled="disabled" type="text" id="Transjual'+
+                no+
+                'HargaJual" value="'+
+                $(".input-harga-barang").val()+
+                '"></div></td>'+   
+                '<td><div class="input text"><label for="Transjual'+
+                no+
+                'Totalsubitem"></label><input class="input-transjual" name="data[Transjual]['+
+                no+
+                '][totalsubitem]" disabled="disabled" type="text" id="Transjual'+
+                no+
+                'Totalsubitem" value="'+
+                $(".input-total-barang").val()+
+                '"></div></td>'+            
+                '<input type="hidden" class="input-transjual" name="data[Transjual]['+
+                no+
+                '][itemtoko_id]" disabled="disabled" id="Transjual'+
+                no+
+                'ItemtokoId" value="'+
+                datas['Itemtoko']['id']+
+                '">'+
+                '<input type="hidden" class="input-transjual" name="data[Transjual]['+
+                no+
+                '][keuntungan]" disabled="disabled" id="Transjual'+
+                no+
+                'Keuntungan" value="'+
+                
+                '">'+
+                '</tr>'
+            );
+            $('#Transjual'+no+'Keuntungan').val($(".input-jumlah-barang").val()*$(".input-unit-barang option[value='"+$(".input-unit-barang").val()+"']").attr("harga")-datas['Itemtoko']['hargabeli']*$(".input-jumlah-barang").val()*$(".input-unit-barang option[value='"+$(".input-unit-barang").val()+"']").attr("sat"));
+            keuntungan+=parseInt($('#Transjual'+no+'Keuntungan').val());
+            $('.untung-harga').val(keuntungan);
+
+            $("#Transjual"+no+"Unit option[value='"+$(".input-unit-barang").val()+"']").attr('selected','selected');
+            $('.view-total-harga-transaksi').html($(".input-nama-barang").val()+"<br>Rp. "+$(".input-total-barang").val()+",00");
+
+            $(".input-jumlah-barang").val("");
+            $(".input-kode-barang").val("");
+            $(".input-unit-barang").val(0);
+            harga_total+=parseInt($("#Transjual"+no+"Totalsubitem").val());
+            $('.total-harga').val(harga_total);
+        }); 

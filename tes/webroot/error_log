@@ -1,0 +1,3 @@
+[23-Aug-2015 14:03:44 UTC] PHP Fatal error:  You must enable the intl extension to use CakePHP. in /home/ulfashys/public_html/tes/config/bootstrap.php on line 38
+[23-Aug-2015 15:28:49 UTC] PHP Fatal error:  You must enable the intl extension to use CakePHP. in /home/ulfashys/public_html/tes/config/bootstrap.php on line 38
+[24-Aug-2015 12:47:30 UTC] PHP Fatal error:  You must enable the intl extension to use CakePHP. in /home/ulfashys/public_html/tes/config/bootstrap.php on line 38

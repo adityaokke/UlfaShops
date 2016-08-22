@@ -1,0 +1,102 @@
+<?php
+		
+			 echo 	$this->Html->link(' Tambhkan Item baru	', 'javascript:;', array(
+		    'onclick' => "var openWin = window.open('".$this->Html->url(array('controller'=>'Item','action'=>'tambah'))."', '_blank', 'toolbar=0,scrollbars=1,location=0,status=1,menubar=0,resizable=1,width=500,height=500');  return false;"
+		));
+		?>
+		<?php
+			echo "<label>Cari kode barang</label>";
+			echo $this->Form->create('Post',array('url'=>'/Item/cekKode','class'=>'form-getkode','default'=>false));
+			echo $this->Form->input('Penyedia.nama',array('id'=>'penyedia-nama','label'=>'nama','style'=>'width:20%'));
+	 		echo $this->Js->submit('cek barang',array('id'=>'getkode','onclick'=>false));
+	 		echo $this->Form->end;	
+			 
+		?>
+		
+		
+	
+
+	<?php
+	
+	echo "</br></br>";
+	echo 	$this->Html->script('jquery',FALSE); 
+	echo	$this->Form->create('Post',array('url'=>'Transbeli/tambah'));
+	echo    $this->Form->input('Notabeli.Penyedia_id',array('empty'=>array(0=>''),'type'=>'select','id'=>'opt','options' => $options,'label'=>'supplier'));
+	echo	$this->Form->input('NotaBuyers',array('id'=>'postcontent','label'=>'kode barang'));
+	echo $this->Form->submit(('Save'), array('class' => 'submit'));
+	 
+	 
+	 /*echo 	"<a href='#' id='pops'>tekan</a>";
+	 echo 	$this->Html->link(' Add Patien', 'javascript:;', array(
+    'onclick' => "var openWin = window.open('".$this->Html->url(array('controller'=>'Penyedia','action'=>'popupadd'))."', '_blank', 'toolbar=0,scrollbars=1,location=0,status=1,menubar=0,resizable=1,width=500,height=500');  return false;"
+		));*/
+
+	 echo "<br><br>";
+	  ?>
+	
+	
+	  
+
+  
+
+	<div class='UserInfoDiv'></div>
+
+
+
+<button type="button" onclick="login();">Login</button>
+  <div class="pop-up" style="padding:20px;"></div>
+
+<table>
+	<thead>
+		<tr style='font-size:15pt;'>
+			<th style="width: 200px">NO</th>		
+			<th style="width: 200px">NAMA</th>
+			
+			<th style="width: 200px">jumlah</th>
+			<th style="width: 200px">Harga beli</th>
+			<th style="width: 200px">Total</th>
+			<th style="width: 200px">Action</th>
+			
+			
+			
+	
+		</tr>		
+	</thead>
+	<tbody>
+		<?php 
+		
+		foreach($daftaritem as $Item)
+		{?>
+			<tr style='font-size:11pt;'>
+				<td><?php echo $Item['Transbeli']['id'];?></td>
+				<td><?php echo $Item['Item']['nama'];?></td>
+				<td><?php echo $Item['Transbeli']['quantity'];?></td>
+				<td><?php echo $Item['Transbeli']['harga'];?></td>
+				<td><?php echo $Item['Transbeli']['harga']* $Item['Transbeli']['quantity'];?></td>
+				<td>
+					<?php
+					echo $this->HTML->link('ubah',array('controller'=>'Item','action'=>'ubah',$daftaritem[0]['Item']['id']));
+					
+					?>
+					<?php
+					echo $this->Form->postlink('hapus',array('controller'=>'Item','action'=>'hapus',$daftaritem[0]['Item']['id']),array('confirm'=>'anda yakin ingin menghapus'));
+					?>
+				</td>
+			</tr>
+		<?php
+		}
+		unset($Item)
+		?>
+
+	</tbody>
+</table>
+<div>
+	<button onclick="window.location.href='<?php echo Router::url(array('controller'=>'Item', 'action'=>'tambah'))?>'">Tambah barang beli</button>
+</div>
+<div	class="paging">	
+<?php	
+	 echo	$this->Paginator->prev('<<',array('escape'=>false),null,array('escape'=>false,'class'=>'prev	disabled'))	.	
+	 		$this->Paginator->numbers(array('before'=>false,'after'=>false,'separator'=>false))	.	
+	 		$this->Paginator->next('>>',array('escape'=>false),	null,array('escape'	=>	false,'class'=>'next	disabled'));		
+?>	
+</div>
